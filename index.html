@@ -3,17 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Campus Cash Calc</title>
+  <title>Campus Cash Calc – Student Finance Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
+  <div id="status-msg" role="status" aria-live="polite" class="sr-only"></div>
+  <div id="alert-msg" role="alert" aria-live="assertive" class="sr-only"></div>
   <header class="site-header">
     <div class="header-inner">
       <span class="logo">Campus Cash Calc</span>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
         <span class="burger-bar"></span><span class="burger-bar"></span><span class="burger-bar"></span>
       </button>
+      <nav id="primary-nav" aria-label="Primary navigation">
+        <ul role="list">
+          <li><a href="#section-dashboard" class="nav-link">Dashboard</a></li>
+          <li><a href="#section-records" class="nav-link">Records</a></li>
+          <li><a href="#section-add" class="nav-link">Add / Edit</a></li>
+          <li><a href="#section-settings" class="nav-link">Settings</a></li>
+          <li><a href="#section-about" class="nav-link">About</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
+  <main id="main-content">
+    <section id="section-dashboard" class="app-section"><h1>Dashboard</h1></section>
+    <section id="section-records"   class="app-section"><h1>Records</h1></section>
+    <section id="section-add"       class="app-section"><h1>Add</h1></section>
+    <section id="section-settings"  class="app-section"><h1>Settings</h1></section>
+    <section id="section-about"     class="app-section"><h1>About</h1></section>
+  </main>
 </body>
 </html>
