@@ -4,14 +4,14 @@
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Campus Cash Calc – Student Finance Tracker</title>
   <meta name="description" content="Track your student expenses, set budgets, search with regex, and import/export your data." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
-  <div id="status-msg" role="status" aria-live="polite" class="sr-only"></div>
-  <div id="alert-msg" role="alert" aria-live="assertive" class="sr-only"></div>
+  <div id="status-msg" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+  <div id="alert-msg" role="alert" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
   <header class="site-header">
     <div class="header-inner">
       <span class="logo" aria-label="Campus Cash Calc">Campus Cash Calc</span>
@@ -34,7 +34,7 @@
       <h1 id="heading-dashboard">Your <span>Finances</span></h1>
       <div class="stats-grid" role="region" aria-label="Summary statistics">
         <article class="stat-card"><span class="stat-label">Total Records</span><span class="stat-value" id="stat-total-records">0</span></article>
-        <article class="stat-card"><span class="stat-label">Total Spent</span><span class="stat-value" id="stat-total-spent">0.00</span></article>
+        <article class="stat-card"><span class="stat-label">Total Spent</span><span class="stat-value" id="stat-total-spent">.00</span></article>
         <article class="stat-card"><span class="stat-label">Top Category</span><span class="stat-value" id="stat-top-category">—</span></article>
         <article class="stat-card"><span class="stat-label">Budget Left</span><span class="stat-value" id="stat-budget-left">—</span></article>
       </div>
@@ -44,11 +44,55 @@
         </div>
         <p class="budget-bar-label" id="budget-bar-label">Set a budget cap in Settings</p>
       </div>
+      <section aria-labelledby="heading-trend">
+        <h2 id="heading-trend">Last 7 Days</h2>
+        <div class="trend-chart" id="trend-chart" aria-label="Spending trend for the last 7 days" role="img"></div>
+      </section>
     </section>
-    <section id="section-records"  class="app-section"><h1>All <span>Records</span></h1></section>
-    <section id="section-add"      class="app-section"><h1>Add <span>Transaction</span></h1></section>
-    <section id="section-settings" class="app-section"><h1>App <span>Settings</span></h1></section>
-    <section id="section-about"    class="app-section"><h1>About <span>This App</span></h1></section>
+    <section id="section-records" class="app-section" aria-labelledby="heading-records">
+      <h1 id="heading-records">All <span>Records</span></h1>
+      <div class="toolbar">
+        <div class="search-wrap" role="search">
+          <label for="search-input">Search</label>
+          <input type="search" id="search-input" autocomplete="off" />
+        </div>
+        <div class="toolbar-controls">
+          <div class="form-group" style="margin:0">
+            <label for="sort-select">Sort</label>
+            <select id="sort-select">
+              <option value="date-desc">Date (newest)</option>
+              <option value="date-asc">Date (oldest)</option>
+              <option value="amount-desc">Amount (high)</option>
+              <option value="amount-asc">Amount (low)</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label for="category-filter">Category</label>
+            <select id="category-filter"><option value="">All</option></select>
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table aria-label="Transaction records">
+          <thead><tr><th scope="col">Description</th><th scope="col">Amount</th><th scope="col">Category</th><th scope="col">Date</th><th scope="col">Actions</th></tr></thead>
+          <tbody id="records-tbody"></tbody>
+        </table>
+        <p id="records-empty" class="empty-msg" hidden>No records yet — add one!</p>
+      </div>
+      <div class="import-export">
+        <button id="btn-export" type="button">Export JSON</button>
+        <label class="btn" for="btn-import">Import JSON<input type="file" id="btn-import" accept=".json" class="sr-only" /></label>
+      </div>
+    </section>
+    <section id="section-add" class="app-section" aria-labelledby="heading-add">
+      <h1 id="heading-add">Add <span>Transaction</span></h1>
+    </section>
+    <section id="section-settings" class="app-section" aria-labelledby="heading-settings">
+      <h1 id="heading-settings">App <span>Settings</span></h1>
+    </section>
+    <section id="section-about" class="app-section" aria-labelledby="heading-about">
+      <h1 id="heading-about">About <span>This App</span></h1>
+    </section>
   </main>
 </body>
 </html>
