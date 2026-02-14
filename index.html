@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Campus Cash Calc – Student Finance Tracker</title>
+  <meta name="description" content="Track your student expenses, set budgets, search with regex, and import/export your data." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <div id="status-msg" role="status" aria-live="polite" class="sr-only"></div>
   <div id="alert-msg" role="alert" aria-live="assertive" class="sr-only"></div>
   <header class="site-header">
     <div class="header-inner">
-      <span class="logo">Campus Cash Calc</span>
+      <span class="logo" aria-label="Campus Cash Calc">Campus Cash Calc</span>
       <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
         <span class="burger-bar"></span><span class="burger-bar"></span><span class="burger-bar"></span>
       </button>
@@ -29,11 +30,25 @@
     </div>
   </header>
   <main id="main-content">
-    <section id="section-dashboard" class="app-section"><h1>Dashboard</h1></section>
-    <section id="section-records"   class="app-section"><h1>Records</h1></section>
-    <section id="section-add"       class="app-section"><h1>Add</h1></section>
-    <section id="section-settings"  class="app-section"><h1>Settings</h1></section>
-    <section id="section-about"     class="app-section"><h1>About</h1></section>
+    <section id="section-dashboard" class="app-section" aria-labelledby="heading-dashboard">
+      <h1 id="heading-dashboard">Your <span>Finances</span></h1>
+      <div class="stats-grid" role="region" aria-label="Summary statistics">
+        <article class="stat-card"><span class="stat-label">Total Records</span><span class="stat-value" id="stat-total-records">0</span></article>
+        <article class="stat-card"><span class="stat-label">Total Spent</span><span class="stat-value" id="stat-total-spent">0.00</span></article>
+        <article class="stat-card"><span class="stat-label">Top Category</span><span class="stat-value" id="stat-top-category">—</span></article>
+        <article class="stat-card"><span class="stat-label">Budget Left</span><span class="stat-value" id="stat-budget-left">—</span></article>
+      </div>
+      <div class="budget-bar-wrap">
+        <div class="budget-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Budget used percentage">
+          <div class="budget-bar-fill" id="budget-bar-fill"></div>
+        </div>
+        <p class="budget-bar-label" id="budget-bar-label">Set a budget cap in Settings</p>
+      </div>
+    </section>
+    <section id="section-records"  class="app-section"><h1>All <span>Records</span></h1></section>
+    <section id="section-add"      class="app-section"><h1>Add <span>Transaction</span></h1></section>
+    <section id="section-settings" class="app-section"><h1>App <span>Settings</span></h1></section>
+    <section id="section-about"    class="app-section"><h1>About <span>This App</span></h1></section>
   </main>
 </body>
 </html>
