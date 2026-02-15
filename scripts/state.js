@@ -14,3 +14,24 @@ function generateId() {
 
 function getRecords()  { return records.slice(); }
 function getSettings() { return settings; }
+function addRecord(data) {
+    var now = new Date().toISOString();
+    var rec = { id: generateId(), description: data.description, amount: parseFloat(data.amount), category: data.category, date: data.date, createdAt: now, updatedAt: now };
+    records.push(rec);
+    saveRecords(records);
+    return rec;
+}
+
+function updateRecord(id, data) {
+    for (var i = 0; i < records.length; i++) {
+        if (records[i].id == id) {
+            records[i].description = data.description;
+            records[i].amount = parseFloat(data.amount);
+            records[i].category = data.category;
+            records[i].date = data.date;
+            records[i].updatedAt = new Date().toISOString();
+            saveRecords(records);
+            return records[i];
+        }
+    }
+}
