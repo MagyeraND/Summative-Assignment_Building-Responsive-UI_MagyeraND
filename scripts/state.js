@@ -46,3 +46,30 @@ function deleteRecord(id) {
 
 function replaceRecords(newRecords) { records = newRecords; saveRecords(records); }
 function updateSettings(newSettings) { settings = newSettings; saveSettings(settings); }
+function getStats() {
+    var total = 0;
+    for (var i = 0; i < records.length; i++) { total += records[i].amount; }
+
+    var catTotals = {};
+    for (var j = 0; j < records.length; j++) {
+        var c = records[j].category;
+        if (!catTotals[c]) catTotals[c] = 0;
+        catTotals[c] += records[j].amount;
+    }
+    var topCat = "—", topAmt = 0;
+    for (var cat in catTotals) { if (catTotals[cat] > topAmt) { topAmt = catTotals[cat]; topCat = cat; } }
+
+    var budget = parseFloat(settings.budget) || 0;
+    var remaining = budget > 0 ? budget - total : null;
+    var today = new Date();
+    var trend = [];
+    for (var d = 6; d >= 0; d--) {
+        var day = new Date(today); day.setDate(today.getDate() - d);
+        var dateStr = day.toISOString().slice(0,10);
+        var label = day.toLocaleDateString("en",{weekday:"short"});
+        var dayTotal = 0;
+        for (var k = 0; k < records.length; k++) { if (records[k].date == dateStr) dayTotal += records[k].amount; }
+        trend.push({label:label, total:dayTotal});
+    }
+    return { total:total, count:records.length, topCat:topCat, budget:budget, remaining:remaining, trend:trend };
+}
