@@ -35,3 +35,14 @@ function updateRecord(id, data) {
         }
     }
 }
+function deleteRecord(id) {
+    var newList = [];
+    for (var i = 0; i < records.length; i++) {
+        if (records[i].id != id) newList.push(records[i]);
+    }
+    records = newList;
+    saveRecords(records);
+}
+
+function replaceRecords(newRecords) { records = newRecords; saveRecords(records); }
+function updateSettings(newSettings) { settings = newSettings; saveSettings(settings); }
