@@ -24,3 +24,29 @@ function validateDate(val) {
     if (!PATTERNS.date.test(val)) return { ok:false, msg:"Use YYYY-MM-DD format e.g. 2026-02-15" };
     return { ok:true, msg:"" };
 }
+function validateCategory(val) {
+    if (!val || val.trim() == "") return { ok:false, msg:"Please pick a category." };
+    if (!PATTERNS.category.test(val.trim())) return { ok:false, msg:"Category should only have letters, spaces or hyphens." };
+    return { ok:true, msg:"" };
+}
+
+function validateBudget(val) {
+    if (val == "" || val == null) return { ok:true, msg:"" };
+    if (!PATTERNS.amount.test(String(val).trim())) return { ok:false, msg:"Budget must be a positive number." };
+    return { ok:true, msg:"" };
+}
+
+function validateRecord(fields) {
+    var errors = {};
+    var r1 = validateDescription(fields.description); if (!r1.ok) errors.description = r1.msg;
+    var r2 = validateAmount(fields.amount);           if (!r2.ok) errors.amount = r2.msg;
+    var r3 = validateCategory(fields.category);       if (!r3.ok) errors.category = r3.msg;
+    var r4 = validateDate(fields.date);               if (!r4.ok) errors.date = r4.msg;
+    return { ok: Object.keys(errors).length == 0, errors: errors };
+}
+
+function compileSearchRegex(pattern, caseSensitive) {
+    if (!pattern) return null;
+    try { return new RegExp(pattern, caseSensitive ? "" : "i"); }
+    catch (e) { return null; }
+}
