@@ -11,3 +11,27 @@ function highlightText(text, regex) {
     try { return escapeHTML(text).replace(regex, function(m){ return "<mark>" + m + "</mark>"; }); }
     catch(e) { return escapeHTML(text); }
 }
+function sortRecords(data) {
+    var copy = data.slice();
+    copy.sort(function(a,b){
+        if (currentSort=="date-desc")  return b.date.localeCompare(a.date);
+        if (currentSort=="date-asc")   return a.date.localeCompare(b.date);
+        if (currentSort=="desc-az")    return a.description.localeCompare(b.description);
+        if (currentSort=="desc-za")    return b.description.localeCompare(a.description);
+        if (currentSort=="amount-asc") return a.amount - b.amount;
+        if (currentSort=="amount-desc")return b.amount - a.amount;
+        return 0;
+    });
+    return copy;
+}
+
+function refreshCategoryFilter() {
+    var sel = document.getElementById("category-filter");
+    var prev = sel.value;
+    var all = getRecords(), cats = [];
+    for (var i = 0; i < all.length; i++) { if (cats.indexOf(all[i].category)==-1) cats.push(all[i].category); }
+    cats.sort();
+    var html = '<option value="">All</option>';
+    for (var j = 0; j < cats.length; j++) { html += "<option"+(cats[j]==prev?" selected":"")+">" + cats[j] + "</option>"; }
+    sel.innerHTML = html;
+}
