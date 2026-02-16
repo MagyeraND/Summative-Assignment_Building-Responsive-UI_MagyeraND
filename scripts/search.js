@@ -35,3 +35,16 @@ function refreshCategoryFilter() {
     for (var j = 0; j < cats.length; j++) { html += "<option"+(cats[j]==prev?" selected":"")+">" + cats[j] + "</option>"; }
     sel.innerHTML = html;
 }
+function handleSearch() {
+    var input = document.getElementById("search-input");
+    var pattern = input.value.trim();
+    if (!pattern) { searchRegex = null; input.classList.remove("invalid"); renderRecords(); return; }
+    var compiled = compileSearchRegex(pattern, false);
+    if (compiled) { searchRegex = compiled; input.classList.remove("invalid"); }
+    else { searchRegex = null; input.classList.add("invalid"); document.getElementById("status-msg").textContent = "Invalid search pattern."; }
+    renderRecords();
+}
+
+document.getElementById("search-input").addEventListener("input", handleSearch);
+document.getElementById("sort-select").addEventListener("change", function(){ currentSort = this.value; renderRecords(); });
+document.getElementById("category-filter").addEventListener("change", function(){ currentCatFilter = this.value; renderRecords(); });
