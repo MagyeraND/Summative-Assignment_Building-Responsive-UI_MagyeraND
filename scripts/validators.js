@@ -13,3 +13,14 @@ function validateDescription(val) {
     if (dup) return { ok:false, msg:You typed the same word twice: "" };
     return { ok:true, msg:"" };
 }
+function validateAmount(val) {
+    if (!val || String(val).trim() == "") return { ok:false, msg:"Amount is required." };
+    if (!PATTERNS.amount.test(String(val).trim())) return { ok:false, msg:"Enter a valid amount e.g. 2500 or 12.50" };
+    return { ok:true, msg:"" };
+}
+
+function validateDate(val) {
+    if (!val) return { ok:false, msg:"Date is required." };
+    if (!PATTERNS.date.test(val)) return { ok:false, msg:"Use YYYY-MM-DD format e.g. 2026-02-15" };
+    return { ok:true, msg:"" };
+}
