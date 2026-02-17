@@ -98,3 +98,32 @@ function renderRecords() {
     tbody.innerHTML = html;
     refreshCategoryFilter();
 }
+document.getElementById("records-tbody").addEventListener("click", function(e) {
+    if (e.target.classList.contains("btn-edit")) {
+        var id = e.target.getAttribute("data-id"), recs = getRecords();
+        for (var i=0;i<recs.length;i++){ if(recs[i].id==id){ openEditForm(recs[i]); break; } }
+    }
+    if (e.target.classList.contains("btn-delete")) {
+        var id2 = e.target.getAttribute("data-id"), recs2 = getRecords(), name="this record";
+        for (var j=0;j<recs2.length;j++){ if(recs2[j].id==id2){ name=recs2[j].description; break; } }
+        if (confirm('Delete "' + name + '"?')) { deleteRecord(id2); announcePolite(name + " deleted."); renderRecords(); renderDashboard(); }
+    }
+});
+document.getElementById("btn-export").addEventListener("click", function() {
+    var data = { app:"Campus Cash Calc", version:1, exportedAt:new Date().toISOString(), records:getRecords() };
+    var blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    var url = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href=url; a.download="campuscashcalc-export.json"; a.click(); URL.revokeObjectURL(url);
+    announcePolite("Exported successfully!");
+});
+document.getElementById("btn-import").addEventListener("change", function(e) {
+    var file = e.target.files[0]; if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+        var parsed; try { parsed = JSON.parse(ev.target.result); } catch(err) { alert("Couldn't read file."); return; }
+        if (!parsed || !Array.isArray(parsed.records)) { alert("Import failed."); return; }
+        replaceRecords(parsed.records); renderRecords(); renderDashboard();
+        announcePolite("Imported " + parsed.records.length + " records.");
+    };
+    reader.readAsText(file); e.target.value = "";
+});
