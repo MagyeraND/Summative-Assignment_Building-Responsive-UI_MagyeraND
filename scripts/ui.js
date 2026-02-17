@@ -72,3 +72,29 @@ function renderDashboard() {
     }
     chart.innerHTML = html;
 }
+function renderRecords() {
+    var data = getRecords();
+    if (currentCatFilter) {
+        var tmp = []; for (var i=0;i<data.length;i++){if(data[i].category==currentCatFilter)tmp.push(data[i]);} data = tmp;
+    }
+    if (searchRegex) {
+        var tmp2 = []; for (var j=0;j<data.length;j++){if(searchRegex.test(data[j].description)||searchRegex.test(data[j].category))tmp2.push(data[j]);} data = tmp2;
+    }
+    data = sortRecords(data);
+    var tbody = document.getElementById("records-tbody");
+    var empty = document.getElementById("records-empty");
+    if (data.length == 0) { tbody.innerHTML = ""; empty.hidden = false; return; }
+    empty.hidden = true;
+    var sym = getCurrencySymbol(), html = "";
+    for (var k = 0; k < data.length; k++) {
+        var r = data[k];
+        html += "<tr><td data-label='Description'>" + highlightText(r.description, searchRegex) + "</td>";
+        html += "<td data-label='Amount'>" + sym + r.amount.toFixed(2) + "</td>";
+        html += "<td data-label='Category'><span class='badge'>" + highlightText(r.category, searchRegex) + "</span></td>";
+        html += "<td data-label='Date'>" + r.date + "</td>";
+        html += "<td data-label='Actions'><button class='btn-edit' data-id='" + r.id + "'>Edit</button> ";
+        html += "<button class='btn-delete' data-id='" + r.id + "'>Delete</button></td></tr>";
+    }
+    tbody.innerHTML = html;
+    refreshCategoryFilter();
+}
