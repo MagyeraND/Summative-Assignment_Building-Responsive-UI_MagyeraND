@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Campus Cash Calc – Student Finance Tracker</title>
-  <meta name="description" content="Track your student expenses, set budgets, search with regex, and import/export your data." />
+  <title>Campus Cash Calc - Student Finance Tracker</title>
+  <meta name="description" content="Track student expenses, set budgets, search with regex, import/export." />
+  <meta name="theme-color" content="#08090e" />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/main.css" />
@@ -12,73 +13,56 @@
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div id="status-msg" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
   <div id="alert-msg" role="alert" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
-  <header class="site-header">
-    <div class="header-inner">
-      <span class="logo" aria-label="Campus Cash Calc">Campus Cash Calc</span>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
-        <span class="burger-bar"></span><span class="burger-bar"></span><span class="burger-bar"></span>
-      </button>
-      <nav id="primary-nav" aria-label="Primary navigation">
-        <ul role="list">
-          <li><a href="#section-dashboard" class="nav-link">Dashboard</a></li>
-          <li><a href="#section-records" class="nav-link">Records</a></li>
-          <li><a href="#section-add" class="nav-link">Add / Edit</a></li>
-          <li><a href="#section-settings" class="nav-link">Settings</a></li>
-          <li><a href="#section-about" class="nav-link">About</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <header class="site-header"><div class="header-inner">
+    <span class="logo" aria-label="Campus Cash Calc">Campus Cash Calc</span>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open or close navigation menu">
+      <span class="burger-bar"></span><span class="burger-bar"></span><span class="burger-bar"></span>
+    </button>
+    <nav id="primary-nav" aria-label="Primary navigation"><ul role="list">
+      <li><a href="#section-dashboard" class="nav-link">Dashboard</a></li>
+      <li><a href="#section-records" class="nav-link">Records</a></li>
+      <li><a href="#section-add" class="nav-link">Add / Edit</a></li>
+      <li><a href="#section-settings" class="nav-link">Settings</a></li>
+      <li><a href="#section-about" class="nav-link">About</a></li>
+    </ul></nav>
+  </div></header>
   <main id="main-content">
     <section id="section-dashboard" class="app-section" aria-labelledby="heading-dashboard">
       <h1 id="heading-dashboard">Your <span>Finances</span></h1>
       <div class="stats-grid" role="region" aria-label="Summary statistics">
         <article class="stat-card"><span class="stat-label">Total Records</span><span class="stat-value" id="stat-total-records">0</span></article>
-        <article class="stat-card"><span class="stat-label">Total Spent</span><span class="stat-value" id="stat-total-spent">.00</span></article>
-        <article class="stat-card"><span class="stat-label">Top Category</span><span class="stat-value" id="stat-top-category">—</span></article>
-        <article class="stat-card"><span class="stat-label">Budget Left</span><span class="stat-value" id="stat-budget-left">—</span></article>
+        <article class="stat-card"><span class="stat-label">Total Spent</span><span class="stat-value" id="stat-total-spent">RWF 0.00</span></article>
+        <article class="stat-card"><span class="stat-label">Top Category</span><span class="stat-value" id="stat-top-category">-</span></article>
+        <article class="stat-card"><span class="stat-label">Budget Left</span><span class="stat-value" id="stat-budget-left">-</span></article>
       </div>
       <div class="budget-bar-wrap">
-        <div class="budget-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Budget used percentage">
-          <div class="budget-bar-fill" id="budget-bar-fill"></div>
-        </div>
+        <div class="budget-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Budget used">
+          <div class="budget-bar-fill" id="budget-bar-fill"></div></div>
         <p class="budget-bar-label" id="budget-bar-label">Set a budget cap in Settings</p>
       </div>
-      <section aria-labelledby="heading-trend">
-        <h2 id="heading-trend">Last 7 Days</h2>
-        <div class="trend-chart" id="trend-chart" aria-label="Spending trend for the last 7 days" role="img"></div>
+      <section aria-labelledby="heading-trend"><h2 id="heading-trend">Last 7 Days</h2>
+        <div class="trend-chart" id="trend-chart" aria-label="7-day spending trend" role="img"></div>
       </section>
     </section>
     <section id="section-records" class="app-section" aria-labelledby="heading-records">
       <h1 id="heading-records">All <span>Records</span></h1>
       <div class="toolbar">
-        <div class="search-wrap" role="search">
-          <label for="search-input">Search</label>
-          <input type="search" id="search-input" autocomplete="off" />
-        </div>
+        <div class="search-wrap" role="search"><label for="search-input">Search</label><input type="search" id="search-input" autocomplete="off" /></div>
         <div class="toolbar-controls">
-          <div class="form-group" style="margin:0">
-            <label for="sort-select">Sort</label>
+          <div class="form-group" style="margin:0"><label for="sort-select">Sort</label>
             <select id="sort-select">
-              <option value="date-desc">Date (newest)</option>
-              <option value="date-asc">Date (oldest)</option>
-              <option value="amount-desc">Amount (high)</option>
-              <option value="amount-asc">Amount (low)</option>
-            </select>
-          </div>
-          <div class="form-group" style="margin:0">
-            <label for="category-filter">Category</label>
-            <select id="category-filter"><option value="">All</option></select>
-          </div>
+              <option value="date-desc">Date (newest)</option><option value="date-asc">Date (oldest)</option>
+              <option value="desc-az">Description A-Z</option><option value="desc-za">Description Z-A</option>
+              <option value="amount-desc">Amount (high)</option><option value="amount-asc">Amount (low)</option>
+            </select></div>
+          <div class="form-group" style="margin:0"><label for="category-filter">Category</label>
+            <select id="category-filter"><option value="">All</option></select></div>
         </div>
       </div>
-      <div class="table-wrap">
-        <table aria-label="Transaction records">
-          <thead><tr><th scope="col">Description</th><th scope="col">Amount</th><th scope="col">Category</th><th scope="col">Date</th><th scope="col">Actions</th></tr></thead>
-          <tbody id="records-tbody"></tbody>
-        </table>
-        <p id="records-empty" class="empty-msg" hidden>No records yet — add one!</p>
-      </div>
+      <div class="table-wrap"><table aria-label="Transaction records">
+        <thead><tr><th scope="col">Description</th><th scope="col">Amount</th><th scope="col">Category</th><th scope="col">Date</th><th scope="col">Actions</th></tr></thead>
+        <tbody id="records-tbody"></tbody>
+      </table><p id="records-empty" class="empty-msg" hidden>No records yet.</p></div>
       <div class="import-export">
         <button id="btn-export" type="button">Export JSON</button>
         <label class="btn" for="btn-import">Import JSON<input type="file" id="btn-import" accept=".json" class="sr-only" /></label>
@@ -86,13 +70,66 @@
     </section>
     <section id="section-add" class="app-section" aria-labelledby="heading-add">
       <h1 id="heading-add">Add <span>Transaction</span></h1>
+      <form id="transaction-form" novalidate>
+        <p id="form-status" role="status" aria-live="polite" class="form-status"></p>
+        <div class="form-group"><label for="field-description">Description *</label>
+          <input type="text" id="field-description" required autocomplete="off" aria-required="true" aria-describedby="err-description" />
+          <span id="err-description" class="field-error" aria-live="polite"></span></div>
+        <div class="form-group"><label for="field-amount">Amount (<span id="currency-label">RWF</span>) *</label>
+          <input type="text" id="field-amount" inputmode="decimal" placeholder="0.00" required aria-required="true" aria-describedby="err-amount" />
+          <span id="err-amount" class="field-error" aria-live="polite"></span></div>
+        <div class="form-group"><label for="field-category">Category *</label>
+          <select id="field-category" required aria-required="true" aria-describedby="err-category"><option value="">- Select -</option></select>
+          <span id="err-category" class="field-error" aria-live="polite"></span></div>
+        <div class="form-group"><label for="field-date">Date *</label>
+          <input type="date" id="field-date" required aria-required="true" aria-describedby="err-date" />
+          <span id="err-date" class="field-error" aria-live="polite"></span></div>
+        <input type="hidden" id="field-edit-id" value="" />
+        <div class="form-actions">
+          <button type="submit" id="btn-submit">Save Transaction</button>
+          <button type="button" id="btn-cancel" class="btn-secondary">Cancel</button>
+        </div>
+      </form>
     </section>
     <section id="section-settings" class="app-section" aria-labelledby="heading-settings">
       <h1 id="heading-settings">App <span>Settings</span></h1>
+      <form id="settings-form" novalidate>
+        <fieldset><legend>Budget Cap</legend>
+          <div class="form-group"><label for="setting-budget">Monthly Budget</label>
+            <input type="text" id="setting-budget" inputmode="decimal" placeholder="e.g. 50000" />
+            <span id="err-budget" class="field-error" aria-live="polite"></span></div></fieldset>
+        <fieldset><legend>Currency</legend>
+          <div class="form-group"><label for="setting-base-currency">Base Currency</label>
+            <select id="setting-base-currency"><option value="RWF">RWF</option><option value="USD">USD</option></select></div>
+          <div class="form-group"><label for="rate-usd">Rate: USD</label>
+            <input type="text" id="rate-usd" inputmode="decimal" placeholder="0.00072" /></div></fieldset>
+        <fieldset><legend>Categories</legend>
+          <div class="form-group"><label for="setting-categories">Categories (comma-separated)</label>
+            <input type="text" id="setting-categories" />
+            <p class="hint">Replace default category list.</p></div></fieldset>
+        <div class="form-actions">
+          <button type="submit" id="btn-save-settings">Save Settings</button>
+          <button type="button" id="btn-clear-data" class="btn-danger">Clear All Data</button>
+        </div>
+      </form>
     </section>
     <section id="section-about" class="app-section" aria-labelledby="heading-about">
       <h1 id="heading-about">About <span>This App</span></h1>
+      <div class="about-card">
+        <h2 class="about-app-name">Campus Cash Calc</h2>
+        <p>A personal finance tracker built for students. Categorise spending, set a budget, search records, and export your data.</p>
+        <ul class="about-links">
+          <li><a href="https://github.com/MagyeraND" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="mailto:ndmagyera@gmail.com">Email</a></li>
+        </ul>
+      </div>
     </section>
   </main>
+  <footer class="site-footer"><p>2026 Campus Cash Calc - Student Finance Tracker</p></footer>
+  <script src="scripts/storage.js"></script>
+  <script src="scripts/state.js"></script>
+  <script src="scripts/validators.js"></script>
+  <script src="scripts/search.js"></script>
+  <script src="scripts/ui.js"></script>
 </body>
 </html>
