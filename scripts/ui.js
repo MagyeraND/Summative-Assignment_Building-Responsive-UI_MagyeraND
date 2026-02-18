@@ -127,3 +127,47 @@ document.getElementById("btn-import").addEventListener("change", function(e) {
     };
     reader.readAsText(file); e.target.value = "";
 });
+var form = document.getElementById("transaction-form");
+var formStatus = document.getElementById("form-status");
+function showFormMsg(msg, type) { formStatus.textContent = msg; formStatus.className = "form-status " + (type||"success"); announcePolite(msg); }
+function resetForm() {
+    form.reset(); document.getElementById("field-edit-id").value = "";
+    document.getElementById("heading-add").innerHTML = "Add <span>Transaction</span>";
+    document.getElementById("btn-submit").textContent = "Save Transaction";
+    formStatus.textContent = ""; formStatus.className = "form-status";
+    showFieldError("field-description","err-description",""); showFieldError("field-amount","err-amount","");
+    showFieldError("field-category","err-category",""); showFieldError("field-date","err-date","");
+}
+function openEditForm(rec) {
+    showSection("#section-add");
+    document.getElementById("heading-add").innerHTML = "Edit <span>Transaction</span>";
+    document.getElementById("btn-submit").textContent = "Update Transaction";
+    document.getElementById("field-description").value = rec.description;
+    document.getElementById("field-amount").value = rec.amount;
+    document.getElementById("field-category").value = rec.category;
+    document.getElementById("field-date").value = rec.date;
+    document.getElementById("field-edit-id").value = rec.id;
+}
+var descEl = document.getElementById("field-description");
+descEl.addEventListener("blur", function(){ var r=validateDescription(descEl.value); showFieldError("field-description","err-description",r.ok?"":r.msg); });
+descEl.addEventListener("input",function(){ if(descEl.classList.contains("invalid")&&validateDescription(descEl.value).ok) showFieldError("field-description","err-description",""); });
+var amtEl  = document.getElementById("field-amount");
+amtEl.addEventListener("blur",  function(){ var r=validateAmount(amtEl.value);  showFieldError("field-amount","err-amount",r.ok?"":r.msg); });
+var dateEl = document.getElementById("field-date");
+dateEl.addEventListener("blur", function(){ var r=validateDate(dateEl.value);   showFieldError("field-date","err-date",r.ok?"":r.msg); });
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    var desc=document.getElementById("field-description").value, amt=document.getElementById("field-amount").value;
+    var cat =document.getElementById("field-category").value,  date=document.getElementById("field-date").value;
+    var result = validateRecord({description:desc,amount:amt,category:cat,date:date});
+    showFieldError("field-description","err-description",result.errors.description||"");
+    showFieldError("field-amount","err-amount",result.errors.amount||"");
+    showFieldError("field-category","err-category",result.errors.category||"");
+    showFieldError("field-date","err-date",result.errors.date||"");
+    if (!result.ok) { showFormMsg("Please fix the errors above.","error"); return; }
+    var editId = document.getElementById("field-edit-id").value;
+    if (editId) { updateRecord(editId,{description:desc,amount:amt,category:cat,date:date}); showFormMsg("Record updated!"); }
+    else { addRecord({description:desc,amount:amt,category:cat,date:date}); showFormMsg("Transaction saved!"); }
+    resetForm(); renderDashboard();
+});
+document.getElementById("btn-cancel").addEventListener("click",function(){ resetForm(); showSection("#section-records"); });
