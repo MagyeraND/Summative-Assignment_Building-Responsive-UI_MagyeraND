@@ -171,3 +171,32 @@ form.addEventListener("submit", function(e) {
     resetForm(); renderDashboard();
 });
 document.getElementById("btn-cancel").addEventListener("click",function(){ resetForm(); showSection("#section-records"); });
+function populateSettings() {
+    var s = getSettings();
+    document.getElementById("setting-budget").value = s.budget || "";
+    document.getElementById("setting-base-currency").value = s.baseCurrency;
+    document.getElementById("rate-usd").value = s.rates.USD || 0.00072;
+    document.getElementById("setting-categories").value = s.categories.join(", ");
+}
+function syncCategoryDropdown() {
+    var s = getSettings(), sel = document.getElementById("field-category"), cur = sel.value;
+    var html = '<option value="">- Select -</option>';
+    for (var i=0;i<s.categories.length;i++) html += "<option"+(s.categories[i]==cur?" selected":"")+">" + s.categories[i] + "</option>";
+    sel.innerHTML = html;
+}
+function updateCurrencyLabel() { var el = document.getElementById("currency-label"); if (el) el.textContent = getSettings().baseCurrency; }
+document.getElementById("settings-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    var budget = document.getElementById("setting-budget").value.trim();
+    var bc = validateBudget(budget);
+    if (!bc.ok) { showFieldError("setting-budget","err-budget",bc.msg); return; }
+    showFieldError("setting-budget","err-budget","");
+    var rawCats = document.getElementById("setting-categories").value.split(",");
+    var cats = []; for(var i=0;i<rawCats.length;i++){var c=rawCats[i].trim(); if(c)cats.push(c);}
+    if (cats.length==0) cats=["Food","Books","Transport","Entertainment","Fees","Other"];
+    updateSettings({ budget:budget, baseCurrency:document.getElementById("setting-base-currency").value, rates:{USD:parseFloat(document.getElementById("rate-usd").value)||0.00072}, categories:cats });
+    syncCategoryDropdown(); updateCurrencyLabel(); announcePolite("Settings saved.");
+});
+document.getElementById("btn-clear-data").addEventListener("click", function(){
+    if (confirm("Delete all records and reset settings?")) { clearAllData(); location.reload(); }
+});
