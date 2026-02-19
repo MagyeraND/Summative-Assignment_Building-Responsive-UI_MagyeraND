@@ -1,3 +1,4 @@
+// state.js - in-memory store, all mutations persist to localStorage
 var records  = loadRecords();
 var settings = loadSettings();
 
@@ -73,3 +74,4 @@ function getStats() {
     }
     return { total:total, count:records.length, topCat:topCat, budget:budget, remaining:remaining, trend:trend };
 }
+
