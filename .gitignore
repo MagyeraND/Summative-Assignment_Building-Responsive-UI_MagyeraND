@@ -1,5 +1,17 @@
-# ignore
-.DS_Store
-desktop.ini
-Thumbs.db
-*.log
+# Ignore everything by default
+*
+
+# Allow project files
+!.gitignore
+!README.md
+!index.html
+!tests.html
+!seed.json
+
+# Allow project folders
+!scripts/
+!scripts/*
+!styles/
+!styles/*
+!assets/
+!assets/**
