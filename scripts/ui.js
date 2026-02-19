@@ -200,3 +200,23 @@ document.getElementById("settings-form").addEventListener("submit", function(e) 
 document.getElementById("btn-clear-data").addEventListener("click", function(){
     if (confirm("Delete all records and reset settings?")) { clearAllData(); location.reload(); }
 });
+var btnConvert = document.getElementById("btn-convert");
+if (btnConvert) {
+    btnConvert.addEventListener("click", function() {
+        var s=getSettings(), amt=parseFloat(document.getElementById("conv-amount").value);
+        var from=document.getElementById("conv-from").value, to=document.getElementById("conv-to").value;
+        var resultEl=document.getElementById("conv-result");
+        if (isNaN(amt)){ resultEl.textContent="Enter a valid number first."; return; }
+        var allRates={}; allRates[s.baseCurrency]=1; for(var code in s.rates) allRates[code]=s.rates[code];
+        var inBase=from==s.baseCurrency?amt:amt/(allRates[from]||1);
+        var converted=to==s.baseCurrency?inBase:inBase*(allRates[to]||1);
+        var sf=CURRENCY_SYMBOLS[from]||from+" ", st=CURRENCY_SYMBOLS[to]||to+" ";
+        resultEl.textContent=sf+amt.toFixed(2)+" = "+st+converted.toFixed(2);
+    });
+}
+if (history.scrollRestoration) { history.scrollRestoration = "manual"; }
+var catElBlur = document.getElementById("field-category");
+catElBlur.addEventListener("blur", function(){ var r=validateCategory(catElBlur.value); showFieldError("field-category","err-category",r.ok?"":r.msg); });
+syncCategoryDropdown();
+updateCurrencyLabel();
+showSection("#section-dashboard");
