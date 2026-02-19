@@ -1,3 +1,4 @@
+// search.js - regex search, sort, filter and highlight rendering
 var currentSort = "date-desc";
 var currentCatFilter = "";
 var searchRegex = null;
@@ -48,3 +49,4 @@ function handleSearch() {
 document.getElementById("search-input").addEventListener("input", handleSearch);
 document.getElementById("sort-select").addEventListener("change", function(){ currentSort = this.value; renderRecords(); });
 document.getElementById("category-filter").addEventListener("change", function(){ currentCatFilter = this.value; renderRecords(); });
+
