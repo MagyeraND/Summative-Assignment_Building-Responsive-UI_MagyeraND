@@ -3,11 +3,70 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Campus Cash Calc - Tests</title>
-  <style>body{font-family:monospace;background:#0f1117;color:#e2e8f0;padding:2rem;}h1{color:#6ee7b7;}</style>
+  <style>
+    :root{--pass:#6ee7b7;--fail:#f87171;--bg:#0f1117;--surface:#1a1d27;--border:#2e3352;--text:#e2e8f0;--muted:#8892b0;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);padding:2rem;}
+    h1{font-size:1.5rem;color:var(--pass);margin-bottom:.5rem;}
+    p.subtitle{color:var(--muted);margin-bottom:2rem;font-size:.9rem;}
+    .summary{display:flex;gap:1rem;margin-bottom:2rem;}
+    .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.5rem;}
+    .summary-card span{display:block;font-size:.75rem;color:var(--muted);text-transform:uppercase;}
+    .summary-card strong{font-size:1.8rem;font-family:monospace;}
+    .pass-count{color:var(--pass);} .fail-count{color:var(--fail);}
+    section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}
+    section h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:1rem;}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;}
+    th{text-align:left;padding:.4rem .75rem;color:var(--muted);font-size:.75rem;border-bottom:1px solid var(--border);}
+    td{padding:.5rem .75rem;border-bottom:1px solid var(--border);}
+    tr:last-child td{border-bottom:none;}
+    .pass td:first-child{color:var(--pass);} .fail td:first-child{color:var(--fail);}
+    code{background:#22263a;padding:1px 6px;border-radius:4px;font-size:.8rem;}
+  </style>
 </head>
 <body>
   <h1>Campus Cash Calc - Test Suite</h1>
-  <p>Loading...</p>
+  <p class="subtitle">Automated tests for all regex validators (R1 to R5)</p>
+  <div class="summary">
+    <div class="summary-card"><span>Total</span><strong id="total">...</strong></div>
+    <div class="summary-card"><span>Passed</span><strong id="passed" class="pass-count">...</strong></div>
+    <div class="summary-card"><span>Failed</span><strong id="failed" class="fail-count">...</strong></div>
+  </div>
+  <div id="results"></div>
   <script src="scripts/validators.js"></script>
+  <script>
+    var suites=[];
+    function addSuite(name,fn,cases){ var tests=[]; for(var i=0;i<cases.length;i++){var c=cases[i];tests.push({label:c[0],input:c[1],expectOk:c[2],note:c[3]||"",validate:fn});} suites.push({name:name,tests:tests}); }
+    function runAll(){
+      var tp=0,tf=0,container=document.getElementById("results");
+      for(var s=0;s<suites.length;s++){
+        var suite=suites[s],section=document.createElement("section");
+        section.innerHTML="<h2>"+suite.name+"</h2>";
+        var table=document.createElement("table");
+        table.innerHTML="<thead><tr><th>Result</th><th>Input</th><th>Expected</th><th>Got</th><th>Note</th></tr></thead>";
+        var tbody=document.createElement("tbody");
+        for(var t=0;t<suite.tests.length;t++){
+          var test=suite.tests[t],result=test.validate(test.input),passed=result.ok===test.expectOk;
+          if(passed){tp++;}else{tf++;}
+          var tr=document.createElement("tr"); tr.className=passed?"pass":"fail";
+          var safe=String(test.input).replace(/</g,"&lt;");
+          var got=result.ok?"valid":"invalid"; if(!result.ok&&result.msg) got+=": "+result.msg;
+          tr.innerHTML="<td>"+test.label+"</td><td><code>"+safe+"</code></td><td>"+(test.expectOk?"valid":"invalid")+"</td><td>"+got+"</td><td>"+test.note+"</td>";
+          tbody.appendChild(tr);
+        }
+        table.appendChild(tbody); section.appendChild(table); container.appendChild(section);
+      }
+      document.getElementById("total").textContent=tp+tf;
+      document.getElementById("passed").textContent=tp;
+      document.getElementById("failed").textContent=tf;
+    }
+    addSuite("R1 - Description",validateDescription,[["Normal","Lunch at cafeteria",true,""],["Leading space"," Lunch",false,""],["Dup word","the the lunch",false,"back-ref"],["Single word","Coffee",true,""]]);
+    addSuite("R2 - Amount",validateAmount,[["Whole","12",true,""],["Two dp","12.50",true,""],["Three dp","12.500",false,""],["Negative","-5",false,""],["Empty","",false,""]]);
+    addSuite("R3 - Date",validateDate,[["Valid","2025-09-29",true,""],["Month 00","2025-00-01",false,""],["Month 13","2025-13-01",false,""],["Bad format","29-09-2025",false,""]]);
+    addSuite("R4 - Category",validateCategory,[["Simple","Food",true,""],["Hyphen","Self-care",true,""],["Numbers","Food123",false,""],["Empty","",false,""]]);
+    addSuite("R5 - compileSearchRegex",function(p){var rx=compileSearchRegex(p,false);return{ok:rx!==null,msg:rx?"":"null"};},
+      [["Valid","(coffee|tea)",true,""],["Invalid","(abc",false,""],["Empty","",false,""]]);
+    runAll();
+  </script>
 </body>
 </html>
