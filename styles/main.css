@@ -107,3 +107,11 @@ input:hover, select:hover { background: var(--surface2); }
 input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.6); cursor: pointer; }
 #btn-export, label.btn { background:var(--surface2); color:var(--text2); border:1px solid var(--border); cursor:pointer; }
 .btn-danger, #btn-clear-data { background:rgba(255,107,107,.1); color:var(--rose); border:1px solid rgba(255,107,107,.3); }
+.burger-bar { transition: transform 180ms cubic-bezier(.4,0,.2,1), opacity 180ms cubic-bezier(.4,0,.2,1); }
+.nav-toggle[aria-expanded="true"] .burger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .burger-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-toggle[aria-expanded="true"] .burger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+#section-dashboard h2 { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--text3); margin-bottom:16px; }
+.trend-bar { opacity:.7; transition: opacity 180ms; cursor:pointer; }
+.trend-bar:hover { opacity:1; }
+@media (min-width: 1024px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } .toolbar { flex-direction: row; align-items: flex-end; } }
