@@ -1,3 +1,4 @@
+// storage.js - thin localStorage wrapper for records and settings
 var RECORDS_KEY  = "campuscash_records";
 var SETTINGS_KEY = "campuscash_settings";
 
@@ -31,3 +32,4 @@ function clearAllData() {
     localStorage.removeItem(RECORDS_KEY);
     localStorage.removeItem(SETTINGS_KEY);
 }
+
