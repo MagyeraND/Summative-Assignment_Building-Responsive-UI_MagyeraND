@@ -103,3 +103,7 @@ td:first-child { color: var(--text); font-weight: 500; }
 button:active { transform: scale(.97); }
 input::placeholder { color: var(--text3); }
 input:hover, select:hover { background: var(--surface2); }
+.form-status { display: block; }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.6); cursor: pointer; }
+#btn-export, label.btn { background:var(--surface2); color:var(--text2); border:1px solid var(--border); cursor:pointer; }
+.btn-danger, #btn-clear-data { background:rgba(255,107,107,.1); color:var(--rose); border:1px solid rgba(255,107,107,.3); }
