@@ -116,3 +116,4 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.6); curs
 .trend-bar:hover { opacity:1; }
 @media (min-width: 1024px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } .toolbar { flex-direction: row; align-items: flex-end; } }
 .search-wrap .hint { margin-top: 4px; }
+.stat-card:nth-child(4) .stat-value { color: var(--amber); }
