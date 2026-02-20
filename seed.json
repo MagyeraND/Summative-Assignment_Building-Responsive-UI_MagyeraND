@@ -4,6 +4,7 @@
     {"id":"rec_0002","description":"Python textbook","amount":8500,"category":"Books","date":"2026-02-14","createdAt":"2026-02-14T09:00:00.000Z","updatedAt":"2026-02-14T09:00:00.000Z"},
     {"id":"rec_0003","description":"Bus fare","amount":500,"category":"Transport","date":"2026-02-15","createdAt":"2026-02-15T08:00:00.000Z","updatedAt":"2026-02-15T08:00:00.000Z"},
     {"id":"rec_0004","description":"Movie ticket","amount":3000,"category":"Entertainment","date":"2026-02-16","createdAt":"2026-02-16T19:00:00.000Z","updatedAt":"2026-02-16T19:00:00.000Z"},
-    {"id":"rec_0005","description":"Registration fees","amount":50000,"category":"Fees","date":"2026-02-10","createdAt":"2026-02-10T08:00:00.000Z","updatedAt":"2026-02-10T08:00:00.000Z"}
+    {"id":"rec_0005","description":"Registration fees","amount":50000,"category":"Fees","date":"2026-02-10"},
+    {"id":"rec_0006","description":"Airtime top-up","amount":1000,"category":"Other","date":"2026-02-17"}
   ]
 }
