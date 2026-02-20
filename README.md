@@ -146,7 +146,7 @@ npx serve .
 
 **David Nkubito**
 - GitHub: [github.com/MagyeraND](https://github.com/MagyeraND)
-- Email: [ndmagyera@gmail.com](mailto:ndmagyera@gmail.com)
+- Email: [d.nkubito1@gmail.com](mailto:d.nkubito1@gmail.com)
 
 ---
 
