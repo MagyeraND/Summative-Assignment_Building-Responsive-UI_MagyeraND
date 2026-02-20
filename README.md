@@ -23,3 +23,5 @@ Open `tests.html` to run the automated validator test suite (R1-R5).
 
 ## Author
 David Nkubito - ndmagyera@gmail.com
+
+> Built as part of a summative assignment on responsive UI development.
