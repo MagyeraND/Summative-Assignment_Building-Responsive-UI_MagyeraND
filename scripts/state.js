@@ -1,4 +1,4 @@
-// state.js - in-memory store, all mutations persist to localStorage
+
 var records  = loadRecords();
 var settings = loadSettings();
 
@@ -62,11 +62,24 @@ function getStats() {
 
     var budget = parseFloat(settings.budget) || 0;
     var remaining = budget > 0 ? budget - total : null;
+    
     var today = new Date();
+    if (records.length > 0) {
+        var maxDate = records[0].date;
+        for (var i = 1; i < records.length; i++) {
+            if (records[i].date > maxDate) maxDate = records[i].date;
+        }
+        var parts = maxDate.split("-");
+        today = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10), 12, 0, 0);
+    }
+    
     var trend = [];
     for (var d = 6; d >= 0; d--) {
         var day = new Date(today); day.setDate(today.getDate() - d);
-        var dateStr = day.toISOString().slice(0,10);
+        var y = day.getFullYear();
+        var m = day.getMonth() + 1;
+        var dd = day.getDate();
+        var dateStr = y + "-" + (m < 10 ? "0" + m : m) + "-" + (dd < 10 ? "0" + dd : dd);
         var label = day.toLocaleDateString("en",{weekday:"short"});
         var dayTotal = 0;
         for (var k = 0; k < records.length; k++) { if (records[k].date == dateStr) dayTotal += records[k].amount; }
@@ -74,4 +87,3 @@ function getStats() {
     }
     return { total:total, count:records.length, topCat:topCat, budget:budget, remaining:remaining, trend:trend };
 }
-
