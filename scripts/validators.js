@@ -1,4 +1,3 @@
-// validators.js - regex validators for all form fields
 var PATTERNS = {
     description: /^\S(?:.*\S)?$/,
     amount: /^(0|[1-9]\d*)(\.\d{1,2})?$/,
@@ -11,7 +10,7 @@ function validateDescription(val) {
     if (!val || val.trim() == "") return { ok:false, msg:"Description is required." };
     if (!PATTERNS.description.test(val)) return { ok:false, msg:"Description can't start or end with spaces." };
     var dup = val.match(PATTERNS.dupWord);
-    if (dup) return { ok:false, msg:You typed the same word twice: "" };
+    if (dup) return { ok:false, msg:"You typed the same word twice" };
     return { ok:true, msg:"" };
 }
 function validateAmount(val) {
@@ -51,4 +50,3 @@ function compileSearchRegex(pattern, caseSensitive) {
     try { return new RegExp(pattern, caseSensitive ? "" : "i"); }
     catch (e) { return null; }
 }
-
