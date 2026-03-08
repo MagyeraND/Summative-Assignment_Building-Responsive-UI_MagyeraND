@@ -3,6 +3,7 @@
 
 # Allow project files
 !.gitignore
+!.nojekyll
 !README.md
 !index.html
 !tests.html
