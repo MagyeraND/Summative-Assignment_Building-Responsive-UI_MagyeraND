@@ -3,7 +3,7 @@
 > **Summative Assignment — Building Responsive UI**
 > Chosen Theme: **Student Finance Tracker**
 > Live Demo: [https://magyerand.github.io/Summative-Assignment_Building-Responsive-UI_MagyeraND/](https://magyerand.github.io/Summative-Assignment_Building-Responsive-UI_MagyeraND/)
-
+demo video: https://drive.google.com/file/d/1etxmxCRPJMXvAhE_pszQBd_Rl6LdYZdQ/view?usp=sharing
 ---
 
 ## Features
